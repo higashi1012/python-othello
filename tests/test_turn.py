@@ -1,15 +1,7 @@
-import unittest
-from scripts.for_test import turn
+from othello import turn
 
+def test_turn():
 
-class TestTashizan(unittest.TestCase):
-
-    def test_tashizan(self):
-
-        expected = None
-        actual = turn()
-        self.assertEqual(expected, actual)
-
-
-if __name__ == "__main__":
-    unittest.main()
+    expected = None
+    actual = turn()
+    assert expected is actual
