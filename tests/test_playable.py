@@ -1,5 +1,5 @@
 import unittest
-from scripts.for_test import playable
+from othello import playable
 
 
 class TestTashizan(unittest.TestCase):
