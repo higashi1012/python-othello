@@ -13,7 +13,9 @@ def turn():
     global player, opponent
     player, opponent = opponent, player
 
-def count(piece, board):
+def count(piece: str, board: list):
+    if not isinstance(piece, str):
+        raise TypeError()
     return sum(cell == piece for row in board for cell in row)
 
 def show_board(board, WHITE, BLACK):
