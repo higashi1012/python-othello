@@ -1,8 +1,12 @@
+import pytest
 from othello import show_board
 
+board = [['□']*8 for _ in range(8)]
+
 def test_show_board():
+    board = [['□']*8 for _ in range(8)]
+    assert show_board('WHITE', 'BLACK', board) == None
 
-    expected = None
-    actual = None
-    assert expected == actual
-
+def test_show_board():
+    with pytest.raises(TypeError):
+        show_board(120, 'hoge', board)

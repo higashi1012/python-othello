@@ -18,3 +18,6 @@ def test_count_invalid_params():
 
     with pytest.raises(TypeError):
         count('hoge', 'fuga')
+
+    with pytest.raises(TypeError):
+        count(123, 456)
