@@ -3,16 +3,6 @@ WHITE = '◎'
 BLACK = '●'
 DIRECTION_xy = (-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)
 
-board = [[SPACE]*8 for _ in range(8)]
-board[3][3], board[3][4] = WHITE, BLACK
-board[4][3], board[4][4] = BLACK, WHITE
-player = BLACK
-opponent = WHITE
-
-def turn():
-    global player, opponent
-    player, opponent = opponent, player
-
 def count(piece: str, board: list):
     if not (isinstance(piece, str) and isinstance(board, list)):
         raise TypeError()
@@ -26,7 +16,7 @@ def show_board(WHITE, BLACK, board):
     black = count(BLACK, board)
     print(f'{BLACK}:{black} vs {WHITE}:{white}'.rjust(17))
 
-def reversible_places(x, y, dx, dy, piece: str, SPACE: str):
+def reversible_places(x, y, dx, dy, piece: str, SPACE: str, board):
     if not (isinstance(piece, str) and isinstance(SPACE, str)):
         raise TypeError()
     places = []
@@ -41,7 +31,7 @@ def reversible_places(x, y, dx, dy, piece: str, SPACE: str):
 def putable_places(piece, SPACE, DIRECTION_xy, board):
     return [(x, y) for x in range(8) for y in range(8)
             if board[y][x] == SPACE
-            if any(reversible_places(x, y, dx, dy, piece, SPACE)
+            if any(reversible_places(x, y, dx, dy, piece, SPACE, board)
                 for dx, dy in DIRECTION_xy)]
 
 def playable(SPACE, DIRECTION_xy, board):
@@ -50,7 +40,7 @@ def playable(SPACE, DIRECTION_xy, board):
 def put_and_reverse(x, y, player, SPACE, DIRECTION_xy, board):
     board[y][x] = player
     for dx, dy in DIRECTION_xy:
-        for rx, ry in reversible_places(x, y, dx, dy, player, SPACE):
+        for rx, ry in reversible_places(x, y, dx, dy, player, SPACE, board):
             board[ry][rx] = player
 
 def choose_place(request):
@@ -72,12 +62,16 @@ def show_result(WHITE, BLACK, board):
     print(f'{judge}です。お疲れさまでした。')
 
 def play():
+    player, opponent = BLACK, WHITE
+    board = [[SPACE]*8 for _ in range(8)]
+    board[3][3], board[3][4] = WHITE, BLACK
+    board[4][3], board[4][4] = BLACK, WHITE
     while playable(SPACE, DIRECTION_xy, board):
         show_board(WHITE, BLACK, board)
         putable_places_ = putable_places(player, SPACE, DIRECTION_xy, board)
         if not putable_places_:
             print(f'{player}は置ける場所がありません。パスします。')
-            turn()
+            player, opponent = opponent, player
             putable_places_ = putable_places(player, SPACE, DIRECTION_xy, board)
         print(f'{player}の番です。')
         print('置ける場所(X,Y)は', *[(x+1,y+1) for x, y in putable_places_], 'です。')
@@ -85,7 +79,7 @@ def play():
         y = choose_place('Y座標を入力してください。') - 1
         if (x, y) in putable_places_:
             put_and_reverse(x, y, player, SPACE, DIRECTION_xy, board)
-            turn()
+            player, opponent = opponent, player
         else:
             print('その場所には置けません。')
     show_board(WHITE, BLACK, board)
