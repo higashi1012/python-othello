@@ -1,15 +1,8 @@
-import unittest
+import pytest
 from othello import playable
 
+DIRECTION_xy = (-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)
 
-class TestTashizan(unittest.TestCase):
-
-    def test_tashizan(self):
-
-        expected = [(2, 3), (3, 2), (4, 5), (5, 4)]
-        actual = playable()
-        self.assertEqual(expected, actual)
-
-
-if __name__ == "__main__":
-    unittest.main()
+def test_playable():
+    assert playable('□', DIRECTION_xy, [['□']*8 for _ in range(8)]) == [(2, 3), (3, 2), (4, 5), (5, 4)]
+    assert playable('□', DIRECTION_xy, [['◎']*8 for _ in range(8)]) == []

@@ -17,7 +17,7 @@ def test_reversible_places():
 
 def test_reversible_places_invalid_params():
     with pytest.raises(TypeError):
-        reversible_places(120, 'hoge')
+        reversible_places([3],'hoge', [7], 120, 'huga')
 
     with pytest.raises(TypeError):
         reversible_places(1, 2, 3, 4, 5, 6)
