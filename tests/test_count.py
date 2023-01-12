@@ -1,23 +1,15 @@
 import pytest
-from othello import count
+from othello import Othello
 
 
 def test_count():
-    piece = 'BLACK'
-    board = [['BLACK', 'BLACK', 'WHITE', 'BLACK']]
-    assert count(piece, board) == 3
-    assert count(
-        'hoge',
-        [['hoge']]
-    ) == 1
-
+    assert Othello().count('□') == 60
+    assert Othello().count('●') == 2
+    assert Othello().count('◎') == 2
 
 def test_count_invalid_params():
     with pytest.raises(TypeError):
-        count(120, 'hoge')
+        Othello().count(120)
 
     with pytest.raises(TypeError):
-        count('hoge', 'fuga')
-
-    with pytest.raises(TypeError):
-        count(123, 456)
+        Othello().count([123])
