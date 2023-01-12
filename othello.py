@@ -3,6 +3,18 @@ WHITE = '◎'
 BLACK = '●'
 DIRECTION_xy = (-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)
 
+class Board:
+
+    def __init__(self, space: str):
+        self.values = [[space] * 8 for _ in range(8)]
+    
+    def coont(self, piece: str) -> int:
+        if not (isinstance(piece, str):
+            raise TypeError(f"The argument 'peice' must be string. But actual: {type(piece)}")
+        return sum(cell == piece for row in self.values for cell in row)
+
+
+
 def count(piece: str, board: list):
     if not (isinstance(piece, str) and isinstance(board, list)):
         raise TypeError()
