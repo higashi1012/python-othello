@@ -1,7 +1,10 @@
+from board import Board
 
 class View:
 
-    def __init__(self, board):
+    def __init__(self, board: Board):
+        if not isinstance(board, Board):
+            raise TypeError(f"The argument 'board' must be Board. But actual : {type(board)}")
         self.board = board
 
     def show_board(self):
