@@ -6,4 +6,4 @@ board = Board()
 view = View(board)
 
 def test_show_board():
-    assert View(board).show_board() == None
+    assert View(board).show_result() == None

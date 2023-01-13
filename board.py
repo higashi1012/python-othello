@@ -16,9 +16,9 @@ class Board:
         return sum(cell == piece for row in self.values for cell in row)
 
 
-    def reversible_places(self, x, y, dx, dy, piece: str):
+    def reversible_places(self, x, y, dx, dy, piece: str) -> list:
         if not isinstance(piece, str):
-            raise TypeError()
+            raise TypeError(f"The argument 'peice' must be string. But actual: {type(piece)}")
         places = []
         x, y = x + dx, y + dy
         while 0 <= x < 8 and 0 <= y < 8 and self.values[y][x] != self.SPACE:
@@ -28,14 +28,14 @@ class Board:
             x, y = x + dx, y + dy
         return []
 
-    def putable_places(self, piece):
+    def putable_places(self, piece) -> list:
         return [(x, y) for x in range(8) for y in range(8)
                 if self.values[y][x] == self.SPACE
                 if any(self.reversible_places(x, y, dx, dy, piece)
                     for dx, dy in self.DIRECTION_xy)]
 
-    def playable(self):
-        return self.putable_places(self.WHITE) or self.putable_places(self.BLACK)
+    def playable(self) -> list:
+        return self.putable_places(self.BLACK) or self.putable_places(self.WHITE)
 
     def put_and_reverse(self, x, y, player):
         self.values[y][x] = player
